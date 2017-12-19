@@ -207,9 +207,7 @@ public class AllServiceConfiguration {
 		@SuppressWarnings("resource")
 		MongoClient mclient = new MongoClient(mongo);
 		MongoDatabase mongodb = mclient.getDatabase(database);
-		DB db = mclient.getDB(database);
-		System.out.println("MongoDB  Connection Created" + db.command("replSetGetStatus"));
-		System.out.println("MongoDB  Connection Created");
+		System.out.println("MongoDB  Connection Created"+ mongodb.getName());
 		return mongodb;
 
 	}
@@ -258,7 +256,7 @@ public class AllServiceConfiguration {
 		MongoClientOptions options = options_builder.build();
 		MongoClient mclient = new MongoClient(mongo);
 		MongoDatabase mongodb = mclient.getDatabase(database);
-		System.out.println("MongoDB  Connection Created");
+		System.out.println("MongoDB  Connection Created with ReadPreference"+mclient.getReadPreference());
 		return mongodb;
 	}
 

@@ -69,7 +69,7 @@ public class ElkController {
 				return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
-		return new ResponseEntity(totalhits, HttpStatus.OK);
+		return new ResponseEntity<String>(totalhits.toString(), HttpStatus.OK);
 	}
 		@RequestMapping(path = "/logSearchCELL", method = RequestMethod.GET, produces = {
 				MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -108,7 +108,7 @@ public class ElkController {
 					return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 			}
-			return new ResponseEntity(totalhits, HttpStatus.OK);
+			return new ResponseEntity<String>(totalhits.toString(), HttpStatus.OK);
 		}
 		@RequestMapping(path = "/logSearch", method = RequestMethod.GET, produces = {
 				MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -145,12 +145,12 @@ public class ElkController {
 					return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 			}
-			return new ResponseEntity(totalhits, HttpStatus.OK);
+			return new ResponseEntity<String>(totalhits.toString(), HttpStatus.OK);
 		}
 		
 		@RequestMapping(path = "/logSearchAPP", method = RequestMethod.GET, produces = {
 				MediaType.APPLICATION_JSON_UTF8_VALUE })
-		public ResponseEntity logSearchAPP() throws Exception {
+		public ResponseEntity<String> logSearchAPP() throws Exception {
 			RestClient restClient = (RestClient) sc.getServiceInstance();
 			DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
 			// get current date time with Date()
@@ -185,7 +185,7 @@ public class ElkController {
 					return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 			}
-			return new ResponseEntity(totalhits, HttpStatus.OK);
+			return new ResponseEntity<String>(totalhits.toString(), HttpStatus.OK);
 		}
 		
 		@RequestMapping(path = "/logSearchRTR", method = RequestMethod.GET, produces = {
@@ -225,7 +225,7 @@ public class ElkController {
 					return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 			}
-			return new ResponseEntity(totalhits, HttpStatus.OK);
+			return new ResponseEntity<String>(totalhits.toString(), HttpStatus.OK);
 		}
 	@RequestMapping(path = "/faillogSearch", method = RequestMethod.GET, produces = {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
@@ -264,7 +264,7 @@ public class ElkController {
 				return new ResponseEntity<String>(totalhits.toString(), HttpStatus.OK);
 
 		}
-		return new ResponseEntity(totalhits, HttpStatus.OK);
+		return new ResponseEntity<String>(totalhits.toString(), HttpStatus.OK);
 	}
 
 }

@@ -1,8 +1,6 @@
 package com.dark.broker.controller;
 
 
-import static org.hamcrest.CoreMatchers.sameInstance;
-
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,8 +80,6 @@ public class RabbitMqController {
 			MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public ResponseEntity<String> failSearch() {
 		Channel channel ;
-		String   message1 = null;
-
 		try{
 			Connection connection = (Connection) sc.getServiceInstance();
 			channel = connection.createChannel();
