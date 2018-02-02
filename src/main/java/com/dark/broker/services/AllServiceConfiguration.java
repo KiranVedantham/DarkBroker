@@ -112,6 +112,10 @@ public class AllServiceConfiguration {
 			System.out.println("Creating MongoDB Connection!");
 			obj = getMongoDBInstance(serviceLable);
 			break;
+		case "mongodb-2":
+			System.out.println("Creating MongoDB-2 Connection!");
+			obj = getMongoDB2Instance(serviceLable);
+			break;
 		case "dynstrg":
 			System.out.println("Creating Dynstrg Connection!");
 			obj = getAmazonS3(serviceLable);
@@ -127,6 +131,10 @@ public class AllServiceConfiguration {
 		case "elk":
 			System.out.println("Creating Elk Connection!");
 			obj = getElkCredntials(serviceLable);
+			break;
+		case "redis-2":
+			System.out.println("Creating Redis-2 Connection!");
+			obj = getRedis2Instance(serviceLable,option);
 			break;
 		case "redis":
 			System.out.println("Creating Redis Connection!");
@@ -246,6 +254,30 @@ public class AllServiceConfiguration {
 		System.out.println("Redis  Connection Created :" + jedis.toString());
 		return jedis;
 	}
+	
+	private Object getRedis2Instance(String serviceLable,String slave) throws JSONException {
+		Jedis jedis =null;
+		if (host.isEmpty()) {
+			setCredentials(serviceLable);
+		}
+		if (slave.equalsIgnoreCase("slave1")){
+			System.out.println("Connecting to  :" +host+  "  slaveport1 : "+slaveport1);
+			 jedis = new Jedis(host, slaveport1,600);
+			jedis.auth(password);
+		}else if  (slave.equalsIgnoreCase("slave2")){
+			System.out.println("Connecting to  :" +host+  "  slaveport2 : "+slaveport2);
+			 jedis = new Jedis(host, slaveport2,600);
+				jedis.auth(password);
+		}else {
+			System.out.println("Connecting to  :" +host+  "  Port : "+port);
+			jedis = new Jedis(host, port,600);
+				jedis.auth(password);
+		}
+			
+		System.out.println("Redis-2  Connection Created :" + jedis.toString());
+		return jedis;
+	}
+	
 	private Object getMongoDBInstance(String serviceLable) throws JSONException, IOException {
 		if (database_uri.isEmpty()) {
 			setCredentials(serviceLable);
@@ -257,6 +289,20 @@ public class AllServiceConfiguration {
 		MongoClient mclient = new MongoClient(mongo);
 		MongoDatabase mongodb = mclient.getDatabase(database);
 		System.out.println("MongoDB  Connection Created with ReadPreference"+mclient.getReadPreference());
+		return mongodb;
+	}
+	
+	private Object getMongoDB2Instance(String serviceLable) throws JSONException, IOException {
+		if (database_uri.isEmpty()) {
+			setCredentials(serviceLable);
+		}		MongoClientURI mongo = new MongoClientURI(database_uri);
+		System.out.println(database_uri);
+		MongoClientOptions.Builder options_builder = new MongoClientOptions.Builder();
+		options_builder.maxConnectionIdleTime(60000);
+		MongoClientOptions options = options_builder.build();
+		MongoClient mclient = new MongoClient(mongo);
+		MongoDatabase mongodb = mclient.getDatabase(database);
+		System.out.println("MongoDB-2  Connection Created with ReadPreference"+mclient.getReadPreference());
 		return mongodb;
 	}
 
@@ -286,6 +332,10 @@ public class AllServiceConfiguration {
 			this.database = (String) credentials.get("database");
 		}
 		if (servicename.equalsIgnoreCase("mongodb")) {
+			this.database_uri = (String) credentials.get("database_uri");
+			this.database = (String) credentials.get("database");
+		}
+		if (servicename.equalsIgnoreCase("mongodb-2")) {
 			this.database_uri = (String) credentials.get("database_uri");
 			this.database = (String) credentials.get("database");
 		}
@@ -334,7 +384,18 @@ public class AllServiceConfiguration {
 			if(null!=slaves){
 			this.slaveport1 = (int) slaves.get(0);
 			this.slaveport2 = (int) slaves.get(1);
-		}}
+			}
+		}
+		if (servicename.equalsIgnoreCase("redis-2")) {
+			this.host = (String) credentials.get("host");
+			this.port = (int) credentials.get("port");
+			this.password = (String) credentials.get("password");
+			ArrayList  slaves=  (ArrayList) credentials.get("slave_ports");
+			if(null!=slaves){
+			this.slaveport1 = (int) slaves.get(0);
+			this.slaveport2 = (int) slaves.get(1);
+			}
+		}
 		if (servicename.equalsIgnoreCase("nova_redis")) {
 			if (this.host.isEmpty()) {
 				this.host = (String) credentials.get("host");
