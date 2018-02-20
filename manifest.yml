@@ -1,0 +1,12 @@
+---
+applications:
+- name: darkbroker-test
+  memory: 1G
+  random-route: true
+  path: target/DarkBroker-1.war
+  instances: 3
+
+
+
+
+
