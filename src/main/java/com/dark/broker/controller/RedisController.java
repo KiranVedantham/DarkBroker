@@ -166,14 +166,21 @@ public class RedisController {
 		return sb.toString();
 	}
 	
-	@RequestMapping(value = "/deletedata", method = RequestMethod.DELETE, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {MediaType.ALL_VALUE})
-	public ResponseEntity<Map<String, String>> deleteData(@RequestBody String keyForDelete) throws Exception {
+	
+	@RequestMapping(value = "/deletedata/{redisKey}", method = RequestMethod.DELETE, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }, consumes = {MediaType.ALL_VALUE})
+	public ResponseEntity<Map<String, String>> deleteData(@PathVariable("redisKey")  String redisKey) throws Exception {
+		System.out.println("Key to delete: "+redisKey);
 		String deletedKeys = "0";
 		Map<String, String> payload = new HashMap() ;
 		try {
 			Jedis jedis = (Jedis)sc.getServiceInstance();
-			deletedKeys = String.valueOf(jedis.del(keyForDelete));
-			payload.put("Number of items deleted", deletedKeys) ;
+			String searchValue = jedis.get(redisKey);
+			if(searchValue == null || searchValue.isEmpty()) {
+				payload.put("Search key not found", redisKey) ;
+			}else {
+				deletedKeys = String.valueOf(jedis.del(redisKey));
+				payload.put("Number of items deleted", deletedKeys) ;
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			throw ex;
