@@ -58,7 +58,7 @@ public class DynaStgController {
 	@RequestMapping(value = "/createbucket", method = RequestMethod.GET)
 	public ResponseEntity<String> createBuckt() throws Exception {
 		Bucket bc =  createBucket();
-		System.out.println("Bucket created");
+		System.out.println("Bucket created: ");
 		return new ResponseEntity<String>(bc.getName(),HttpStatus.OK);
 
 	}

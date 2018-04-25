@@ -45,6 +45,7 @@ public class MongoDbController {
 
 	@RequestMapping(value = "/insertOne", method = RequestMethod.GET)
 	public  ResponseEntity<String> insertOne() throws Exception {
+		System.out.println("Inserting sincle Document");
 		MongoDatabase dbConnection = null;
 		Document document = new  Document();
 		try {
@@ -89,6 +90,7 @@ public class MongoDbController {
 		} catch (SQLException e) {
 			return new ResponseEntity<String>(e.getMessage(),HttpStatus.EXPECTATION_FAILED);
 		}
+		System.out.println(documents.size() + "Documents Inserted!");
 		return new ResponseEntity<String>(documents.toString(),HttpStatus.OK);
 	}
 

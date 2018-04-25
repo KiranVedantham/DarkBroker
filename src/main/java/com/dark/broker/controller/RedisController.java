@@ -40,6 +40,13 @@ public class RedisController {
 		jedis.set("Sample", "Hello All This is Redis Sample");
 		return new ResponseEntity<String>("Sucessfully insered values </br> Key : Sample", HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = "/insertdata/{redisKey}", method = RequestMethod.GET)
+	public ResponseEntity<String> insertData(@PathVariable("redisKey") String redisKey) throws Exception {
+		Jedis jedis = (Jedis)sc.getServiceInstance();
+		jedis.set(redisKey, "Hello All This is Redis Sample");
+		return new ResponseEntity<String>("Sucessfully insered values </br> Key : "+redisKey, HttpStatus.OK);
+	}
 
 	@RequestMapping(path = "/insertlist", method = RequestMethod.GET)
 	public ResponseEntity<String> insertList() throws Exception {
@@ -67,7 +74,9 @@ public class RedisController {
 		Jedis jedis = (Jedis)sc.getServiceInstance();
 		Map<String,String> payload = new HashMap<String,String>() ;
 		if (jedis.get(redisKey) == null) {
-			return new ResponseEntity<Map<String,String>>(payload,HttpStatus.NOT_FOUND);
+			System.out.println("No key available...");
+			payload.put("No key found:", redisKey);
+			return new ResponseEntity<Map<String,String>>(payload,HttpStatus.OK);
 		}
 		payload.put(redisKey, jedis.get(redisKey)) ;
 		return new ResponseEntity<Map<String,String>>(payload,HttpStatus.OK);
@@ -198,6 +207,7 @@ public class RedisController {
 			ex.printStackTrace();
 			throw ex;
 		}
-		return new ResponseEntity<String> (statusCode, HttpStatus.OK);
+		
+		return new ResponseEntity<String> ("Flush status:"+statusCode, HttpStatus.OK);
 	}
 }
