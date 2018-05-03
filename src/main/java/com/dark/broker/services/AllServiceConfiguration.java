@@ -108,6 +108,10 @@ public class AllServiceConfiguration {
 			System.out.println("Creating MariaDBEnt Connection!");
 			obj = getMariaDBEntInstance(serviceLable);
 			break;
+		case "mariadbentikarus":
+			System.out.println("Creating mariadbentikarus Connection!");
+			obj = getMariaDBEntiKarusInstance(serviceLable);
+			break;
 		case "mongodb":
 			System.out.println("Creating MongoDB Connection!");
 			obj = getMongoDBInstance(serviceLable);
@@ -331,6 +335,10 @@ public class AllServiceConfiguration {
 			this.jdbcurl = (String) credentials.get("jdbcUrl");
 			this.database = (String) credentials.get("database");
 		}
+		if (servicename.equalsIgnoreCase("mariadbentikarus")) {
+			this.jdbcurl = (String) credentials.get("jdbcUrl");
+			this.database = (String) credentials.get("database");
+		}
 		if (servicename.equalsIgnoreCase("mongodb")) {
 			this.database_uri = (String) credentials.get("database_uri");
 			this.database = (String) credentials.get("database");
@@ -457,6 +465,23 @@ public class AllServiceConfiguration {
 		}
 
 		return connection;
+	}
+	
+	private Object getMariaDBEntiKarusInstance(String serviceLable) throws JSONException, SQLException {
+
+		setCredentials(serviceLable);
+		Connection connection = null;
+		Driver myDriver = new com.mysql.jdbc.Driver();
+		DriverManager.registerDriver(myDriver);
+		connection = DriverManager.getConnection(jdbcurl);
+		if (connection != null) {
+			System.out.println("You made it, take control your database now!");
+		} else {
+			System.out.println("Failed to make connection!");
+		}
+
+		return connection;
+
 	}
 
 	private static String getdetails(String database_uri, String to_check) {

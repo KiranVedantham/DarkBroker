@@ -45,6 +45,12 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+        
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-task</artifactId>
+			<version>1.2.2.RELEASE</version>
+		</dependency>
 
         <dependency>
             <groupId>org.webjars</groupId>
@@ -112,6 +118,7 @@
 			<artifactId>boon</artifactId>
 			<version>0.33</version>
 		</dependency>
+		
     </dependencies>
     <build>
         <plugins>
