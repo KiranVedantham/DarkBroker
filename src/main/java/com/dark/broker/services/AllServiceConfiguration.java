@@ -112,6 +112,14 @@ public class AllServiceConfiguration {
 			System.out.println("Creating mariadbentikarus Connection!");
 			obj = getMariaDBEntiKarusInstance(serviceLable);
 			break;
+		case "mariadbenthypnos":
+			System.out.println("Creating mariadbentikarus Connection!");
+			obj = getMariaDBEntiKarusInstance(serviceLable);
+			break;
+		case "mariadbentodysseus":
+			System.out.println("Creating mariadbentikarus Connection!");
+			obj = getMariaDBEntiKarusInstance(serviceLable);
+			break;
 		case "mongodb":
 			System.out.println("Creating MongoDB Connection!");
 			obj = getMongoDBInstance(serviceLable);
@@ -336,6 +344,14 @@ public class AllServiceConfiguration {
 			this.database = (String) credentials.get("database");
 		}
 		if (servicename.equalsIgnoreCase("mariadbentikarus")) {
+			this.jdbcurl = (String) credentials.get("jdbcUrl");
+			this.database = (String) credentials.get("database");
+		}
+		if (servicename.equalsIgnoreCase("mariadbenthypnos")) {
+			this.jdbcurl = (String) credentials.get("jdbcUrl");
+			this.database = (String) credentials.get("database");
+		}
+		if (servicename.equalsIgnoreCase("mariadbentodysseus")) {
 			this.jdbcurl = (String) credentials.get("jdbcUrl");
 			this.database = (String) credentials.get("database");
 		}
