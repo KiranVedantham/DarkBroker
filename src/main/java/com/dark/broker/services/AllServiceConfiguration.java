@@ -113,11 +113,11 @@ public class AllServiceConfiguration {
 			obj = getMariaDBEntiKarusInstance(serviceLable);
 			break;
 		case "mariadbenthypnos":
-			System.out.println("Creating mariadbentikarus Connection!");
+			System.out.println("Creating mariadbenthypnos Connection!");
 			obj = getMariaDBEntiKarusInstance(serviceLable);
 			break;
 		case "mariadbentodysseus":
-			System.out.println("Creating mariadbentikarus Connection!");
+			System.out.println("Creating mariadbentodysseus Connection!");
 			obj = getMariaDBEntiKarusInstance(serviceLable);
 			break;
 		case "mongodb":
@@ -130,6 +130,10 @@ public class AllServiceConfiguration {
 			break;
 		case "dynstrg":
 			System.out.println("Creating Dynstrg Connection!");
+			obj = getAmazonS3(serviceLable);
+			break;
+		case "dynstrg-2":
+			System.out.println("Creating Dynstrg-2 Connection!");
 			obj = getAmazonS3(serviceLable);
 			break;
 		case "dynstrg_ECS":
@@ -380,6 +384,12 @@ public class AllServiceConfiguration {
 			this.elasticCred.setElasticSearchPort((int) credentials.get("elasticSearchPort"));
 		}
 		if (servicename.equalsIgnoreCase("dynstrg")) {
+			this.accessHost = (String) credentials.get("accessHost");
+			this.accessKey = (String) credentials.get("accessKey");
+			this.sharedSecret = (String) credentials.get("sharedSecret");
+
+		}
+		if (servicename.equalsIgnoreCase("dynstrg-2")) {
 			this.accessHost = (String) credentials.get("accessHost");
 			this.accessKey = (String) credentials.get("accessKey");
 			this.sharedSecret = (String) credentials.get("sharedSecret");
